@@ -25,11 +25,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "ControllerData.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 typedef StaticTask_t osStaticThreadDef_t;
+typedef StaticQueue_t osStaticMessageQDef_t;
 /* USER CODE BEGIN PTD */
 
 /* USER CODE END PTD */
@@ -84,6 +85,17 @@ const osThreadAttr_t BluetoothRxTask_attributes = {
   .stack_size = sizeof(BluetoothRxTaskBuffer),
   .priority = (osPriority_t) osPriorityLow,
 };
+/* Definitions for RxQhandle */
+osMessageQueueId_t RxQhandleHandle;
+uint8_t RxQhandleBuffer[ 16 * sizeof( Data ) ];
+osStaticMessageQDef_t RxQhandleControlBlock;
+const osMessageQueueAttr_t RxQhandle_attributes = {
+  .name = "RxQhandle",
+  .cb_mem = &RxQhandleControlBlock,
+  .cb_size = sizeof(RxQhandleControlBlock),
+  .mq_mem = &RxQhandleBuffer,
+  .mq_size = sizeof(RxQhandleBuffer)
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -117,6 +129,10 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
+
+  /* Create the queue(s) */
+  /* creation of RxQhandle */
+  RxQhandleHandle = osMessageQueueNew (16, sizeof(Data), &RxQhandle_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
