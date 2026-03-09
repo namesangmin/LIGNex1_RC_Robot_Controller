@@ -25,7 +25,7 @@ void * PacketCodec::Encoding(void *argument){
 
 
 
-
+    buf[13] = 0;
     for(uint8_t i = 0; i < Packet_len; i++){
         buf[13] ^= buf[i];
     }

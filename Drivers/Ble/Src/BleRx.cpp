@@ -25,7 +25,7 @@ extern "C"{
 //   /* USER CODE END USART1_IRQn 1 */
 // }
 
-
+// Init_type 구조체에 데이터 저장 후 주소값 전달할것
 void BleRx::Init(void *argument){
     Init_type *handle = static_cast<Init_type*>(argument);
     huart = static_cast<UART_HandleTypeDef*>(handle->huart);
@@ -107,7 +107,7 @@ void BleRx::GetFromRx(void *argument){
     osMessageQueueGet(*qhandle, &receive_flag, NULL, osWaitForever);
     if (uart_dma_read(NULL)){
         Data *data = (Data*)processor->Decoding(tmp);
-    #if isRCCar
+    #if RC_Car
         if (data->mode_data == driving || data->mode_data == rotate){
             osMessageQueuePut(*moter_q, data, 0, 10);
         }
