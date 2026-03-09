@@ -1,6 +1,10 @@
 #include "BleRx.hpp"
 #include "PacketCodec.hpp"
 
+extern "C"{
+    #include "main.h"
+}
+
 //반드시 Interrupt 설정 필요함
 //flag = 1
 // void USART1_IRQHandler(void)
@@ -21,15 +25,14 @@
 
 void BleRx::Init(void *argument){
     Init_type *handle = static_cast<Init_type*>(argument);
-    huart = handle->huart;
-    qhandle = handle->qhandle;
-    servo_q = handle->servo_q;
-    moter_q = handle->moter_q;
+    huart = static_cast<UART_HandleTypeDef*>(handle->huart);
+    qhandle = static_cast<osMessageQueueId_t*>(handle->qhandle);
+    servo_q = static_cast<osMessageQueueId_t*>(handle->servo_q);
+    moter_q = static_cast<osMessageQueueId_t*>(handle->moter_q);
 
     rx_old_pos = 0;
     if (processor == nullptr){
-        processor = new (std::nothrow) PacketCodec;
-        configASSERT(processor != nullptr);
+        processor = new PacketCodec;
      }
      HAL_UART_Receive_DMA(huart, rx_buf, RX_BUF_SIZE);
      __HAL_DMA_DISABLE_IT(huart->hdmarx, DMA_IT_HT);
@@ -99,8 +102,8 @@ uint16_t BleRx::uart_dma_read(void *argument){
 // 컨트롤러와 rc카에 각 디바이스를 구분할 수 있는 표시 해야함
 void BleRx::GetFromRx(void *argument){
     osMessageQueueGet(*qhandle, &receive_flag, NULL, osWaitForever);
-    if (uart_dma_read()){
-        Data *data = processor.Decoding(tmp);
+    if (uart_dma_read(NULL)){
+        Data *data = (Data*)processor->Decoding(tmp);
     #if isRCCar
         if (data->mode_data == driving){
             osMessageQueuePut(*moter_q, data, 0, 10);
@@ -116,6 +119,7 @@ void BleRx::GetFromRx(void *argument){
             //HAL_GPIO_WritePin(~~);
         }
         else
+        {}
     #endif
         
     }

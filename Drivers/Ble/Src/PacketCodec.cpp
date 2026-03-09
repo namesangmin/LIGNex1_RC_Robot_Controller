@@ -6,31 +6,33 @@ void * PacketCodec::Encoding(void *argument){
     data = *static_cast<Data*>(argument);
     buf[0] = SOF;
     buf[1] = data.mode_data;
-    buf[2] = data.moter_x;
-    buf[3] = data.moter_y;
-    buf[4] = data.gripper;
+    buf[2] = data.gripper;
+    
+    buf[3] = (uint8_t)(data.moter_x);
+    buf[4] = (uint8_t)(data.moter_x >> 8);
 
-    buf[5] = data.(uint8_t)(servo_top);
-    buf[6] = data.(uint8_t)(servo_top >> 8);
-    buf[7] = data.(uint8_t)(servo_top >> 16);
-    buf[8] = data.(uint8_t)(servo_top >> 24);
+    buf[5] = (uint8_t)(data.moter_y);
+    buf[6] = (uint8_t)(data.moter_y >> 8);
 
-    buf[9] = data.(uint8_t)(servo_mid);
-    buf[10] = data.(uint8_t)(servo_mid >> 8);
-    buf[11] = data.(uint8_t)(servo_mid >> 16);
-    buf[12] = data.(uint8_t)(servo_mid >> 24);
+    buf[7] = (uint8_t)(data.servo_top);
+    buf[8] = (uint8_t)(data.servo_top >> 8);
 
-    buf[13] = data.(uint8_t)(servo_bot);
-    buf[14] = data.(uint8_t)(servo_bot >> 8);
-    buf[15] = data.(uint8_t)(servo_bot >> 16);
-    buf[16] = data.(uint8_t)(servo_bot >> 24);
+    buf[9] = (uint8_t)(data.servo_mid);
+    buf[10] = (uint8_t)(data.servo_mid >> 8);
+
+    buf[11] = (uint8_t)(data.servo_bot);
+    buf[12] = (uint8_t)(data.servo_bot >> 8);
+
+
+
 
     for(uint8_t i = 0; i < Packet_len; i++){
-        buf[17] ^= buf[i];
+        buf[13] ^= buf[i];
     }
     return buf;
 }
 
+//여기서부터 다시 수정
 void *PacketCodec::Decoding(void *argument){
     uint8_t *buf = static_cast<uint8_t *>(argument);
     data.mode_data = buf[1];

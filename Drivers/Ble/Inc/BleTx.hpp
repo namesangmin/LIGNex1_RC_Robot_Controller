@@ -5,6 +5,8 @@ extern "C"{
     #include "usart.h"
 }
 #include "IDataProcessor.hpp"
+#include "DataConfig.hpp"
+#include "ITx.hpp"
 
 class BleTx : public ITx{
     private:

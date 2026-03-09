@@ -7,23 +7,24 @@ extern "C"{
     #include "usart.h"
 }
 
-#define Packet_len 17
+#define Packet_len 13
 #define SOF 0xAA
 #define RX_BUF_SIZE 128
 
 #define driving 0xFF
+#define rotate 0xDD
 #define arm 0x00
 #define ack_driving 0xA5
 #define ack_arm 0x5A
 
 typedef struct{
     uint8_t mode_data;
-    uint8_t moter_x;
-    uint8_t moter_y;
     uint8_t gripper;
-    uint32_t servo_top;
-    uint32_t servo_mid;
-    uint32_t servo_bot;
+    uint16_t moter_x;
+    uint16_t moter_y;
+    uint16_t servo_top;
+    uint16_t servo_mid;
+    uint16_t servo_bot;
 }Data;
 
 typedef struct{
@@ -34,9 +35,9 @@ typedef struct{
 }Init_type;
 
 typedef struct{
-    uint32_t servo_top;
-    uint32_t servo_mid;
-    uint32_t servo_bot;
+    uint16_t servo_top;
+    uint16_t servo_mid;
+    uint16_t servo_bot;
     uint8_t gripper;
 }Servo_type;
 
@@ -46,8 +47,8 @@ typedef struct{
 }Servo_Init;
 
 typedef struct{
-    uint8_t moter_x;
-    uint8_t moter_y;
+    uint16_t moter_x;
+    uint16_t moter_y;
 }Moter_type;
 
 
