@@ -16,6 +16,7 @@ class BleTx : public ITx{
     public:
          void Init(void *) override;
          void SendToTx(void *) override;
+         ~BleTx();
 };
 
 #endif

@@ -14,3 +14,7 @@ void BleTx::SendToTx(void *argument){
     uint8_t *buf = (uint8_t*)processor->Encoding(data);
     HAL_UART_Transmit(huart, buf, Packet_len, 10);
 }
+
+BleTx::~BleTx(){
+    delete processor;
+}

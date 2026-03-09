@@ -10,6 +10,7 @@ extern "C"{
 #include "DataConfig.hpp"
 #include "IDataProcessor.hpp"
 
+
 class BleRx : public IRx{
     private:
         UART_HandleTypeDef *huart;
@@ -26,6 +27,7 @@ class BleRx : public IRx{
     public:
         void Init(void *argument) override;
         void GetFromRx(void *arguement) override;
+        ~BleRx();
 };
 
 

@@ -7,14 +7,16 @@ extern "C"{
 }
 
 //반드시 Interrupt 설정 필요함
-//flag = 1
+//#include "cmsis_os2.h"
+// static uint8_t Rxflag = 1;
 // void USART1_IRQHandler(void)
 // {
 //   /* USER CODE BEGIN USART1_IRQn 0 */
 //   if (__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE) != RESET){
 //     __HAL_UART_CLEAR_IDLEFLAG(&huart1);
     
-//     osMessageQueuePut(qhandle, &flag, 0, 0);
+//     osMessageQueuePut(RxQhandleHandle, &Rxflag, 0, 0);
+//     Rxflag = 0;
 //   }
 //   /* USER CODE END USART1_IRQn 0 */
 //   HAL_UART_IRQHandler(&huart1);
@@ -124,4 +126,8 @@ void BleRx::GetFromRx(void *argument){
     #endif
         
     }
+}
+
+BleRx::~BleRx(){
+    delete processor;
 }
