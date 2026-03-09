@@ -47,7 +47,6 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
 
     # tasks header paths
-    ${PROJECT_SOURCE_DIR}/App/Tasks/BluetoothTxTask/Src/BluetoothTxTask.cpp
     ${PROJECT_SOURCE_DIR}/App/Tasks/BluetoothRxTask/Src/BluetoothRxTask.cpp
     ${PROJECT_SOURCE_DIR}/App/Tasks/InputTask/Src/InputTask.cpp
 
@@ -60,7 +59,6 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
 
     # tasks header paths
-    ${PROJECT_SOURCE_DIR}/App/Tasks/BluetoothTxTask/Inc
     ${PROJECT_SOURCE_DIR}/App/Tasks/BluetoothRxTask/Inc
     ${PROJECT_SOURCE_DIR}/App/Tasks/InputTask/Inc
 
