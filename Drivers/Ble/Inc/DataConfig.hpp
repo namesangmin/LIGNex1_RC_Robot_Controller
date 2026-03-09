@@ -17,6 +17,13 @@ extern "C"{
 #define ack_driving 0xA5
 #define ack_arm 0x5A
 
+extern UART_HandleTypeDef huart1;
+extern osMessageQueueId_t RxQhandleHandle;
+
+#if RC_Car
+    extern osMessageQueueId_t ServoQhandle;
+    extern osMessageQueueId_t MoterQhandle;
+#endif
 typedef struct{
     uint8_t mode_data;
     uint8_t gripper;
@@ -47,6 +54,7 @@ typedef struct{
 }Servo_Init;
 
 typedef struct{
+    uint8_t mode_data;
     uint16_t moter_x;
     uint16_t moter_y;
 }Moter_type;
@@ -56,6 +64,7 @@ typedef struct{
     osMessageQueueId_t qhandle;
     Moter_type *buf;
 }Moter_Init;
+
 #endif
 
 // 필요한 MessageQueue : 
