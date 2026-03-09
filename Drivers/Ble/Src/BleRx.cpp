@@ -1,5 +1,6 @@
 #include "BleRx.hpp"
 #include "PacketCodec.hpp"
+#include "DataConfig.hpp"
 
 extern "C"{
     #include "main.h"
@@ -105,7 +106,7 @@ void BleRx::GetFromRx(void *argument){
     if (uart_dma_read(NULL)){
         Data *data = (Data*)processor->Decoding(tmp);
     #if isRCCar
-        if (data->mode_data == driving){
+        if (data->mode_data == driving || data->mode_data == rotate){
             osMessageQueuePut(*moter_q, data, 0, 10);
         }
         else if(data->mode_data == arm){
