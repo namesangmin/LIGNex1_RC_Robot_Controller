@@ -11,6 +11,6 @@ void BluetoothRxTaskHandler(void *argument){
     Init_type init = {&huart1, &RxQhandleHandle, NULL, NULL};
     Rx->Init(&init);
     for(;;){
-        osDelay(1);
+        Rx->GetFromRx(NULL);
     }
 }
