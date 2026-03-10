@@ -30,7 +30,6 @@ void SystemManager::run()
     {
         checkModeSwitch();
         Current_Controller->update(&m_packet);
-        //printf("%d %d %d %d %d\n",  m_packet.moter_x, m_packet.moter_y, m_packet.servo_bot, m_packet.servo_mid, m_packet.servo_top);
     }
 }
 
@@ -49,14 +48,14 @@ void SystemManager::checkModeSwitch()
         {
             Last_Pressed_Time = Current_Time;
            
-            if(Current_Mode == JOY_MODE)
+            if(Current_Mode == driving || Current_Mode == rotate)
             {
-                Current_Mode = SERVO_MODE;
+                Current_Mode = arm;
                 Current_Controller = &Servo_Controller;
             }
             else
             {
-                Current_Mode = JOY_MODE;
+                Current_Mode = driving;
                 Current_Controller = &Joy_Controller;
             }
         }
@@ -64,7 +63,8 @@ void SystemManager::checkModeSwitch()
     updateLED(); 
     Prev_State = Current_State;
 }
-void SystemManager::updateLED(){    
+void SystemManager::updateLED()
+{    
     // 초기화
     HAL_GPIO_WritePin(Driving_Mode_LED_GPIO_Port,Driving_Mode_LED_Pin | Robot_Arm_Mode_LED_Pin, GPIO_PIN_RESET);
     
@@ -72,17 +72,6 @@ void SystemManager::updateLED(){
     uint16_t tmIdx = 0;
     if(Current_Mode == driving || Current_Mode == rotate) tmIdx = 0;
     else if(Current_Mode == arm)tmIdx = 1;
+
     HAL_GPIO_WritePin(Driving_Mode_LED_GPIO_Port,LED_Pin_arr[tmIdx],GPIO_PIN_SET);
 }
-/*
-SystemManager manager;
-void SystemManager_Init(ADC_HandleTypeDef *hadc)
-{
-    manager.initSystem(hadc);
-}
-
-void SystemManager_Run()
-{
-    manager.run();
-}
-*/
