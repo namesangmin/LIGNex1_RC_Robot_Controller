@@ -1,6 +1,6 @@
 #ifndef __UGV_PACKET_H__
 #define __UGV_PACKET_H__
-
+#if 0
 #include "main.h"
 
 #pragma pack(push, 1) 
@@ -22,4 +22,6 @@ typedef struct{
     uint16_t servo_bot;
 }Data;
 #pragma pack(pop)
+#endif
+
 #endif

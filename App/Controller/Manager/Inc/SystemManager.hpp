@@ -5,8 +5,12 @@
 #include "IController.hpp"
 #include "JoyStickController.hpp"
 #include "ServoController.hpp"
-#include "UGV_Packet.hpp"
+//#include "UGV_Packet.hpp"
 #include "stm32f1xx_hal_adc.h"
+
+#include "BleTx.hpp"
+#include "ITx.hpp"
+#include <cstddef>
 
 #define MAX_MODULES 2
 #define DEBOUNCE_TIME 200
@@ -24,6 +28,7 @@ public:
     void run();
 
 private:
+    ~SystemManager();
     Data m_packet;
     void checkModeSwitch();
     void updateLED();
@@ -36,6 +41,10 @@ private:
 
     // 모드 설정
     IController* Current_Controller;
+
+    // 데이터 send 클래스
+    ITx* Tx;
+    
     // 미리 객체를 만들어 놓음
     JoyStickController Joy_Controller;
     ServoController Servo_Controller;

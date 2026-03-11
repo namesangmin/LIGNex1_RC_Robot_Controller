@@ -51,7 +51,7 @@ typedef StaticQueue_t osStaticMessageQDef_t;
 /* USER CODE END Variables */
 /* Definitions for InputTask */
 osThreadId_t InputTaskHandle;
-uint32_t InputTaskBuffer[ 128 ];
+uint32_t InputTaskBuffer[ 512 ];
 osStaticThreadDef_t InputTaskControlBlock;
 const osThreadAttr_t InputTask_attributes = {
   .name = "InputTask",

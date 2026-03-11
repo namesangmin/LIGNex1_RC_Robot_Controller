@@ -4,12 +4,21 @@
 #include "stm32f1xx_hal_adc.h"
 #include "stm32f1xx_hal_dma.h"
 #include "stm32f1xx_hal_gpio.h"
+#include <cstddef>
 #include <cstdio>
 
 // 디폴트 모드 주행 모드
 // main.c에서 hadc1을 가져와서 저장
+
+SystemManager::~SystemManager(){
+    delete Tx;
+}
+
 void SystemManager::initSystem(ADC_HandleTypeDef* hadc)
 {
+    Tx = new BleTx();
+    Tx->Init(nullptr);
+
     // adc 주솟값 전달
     HAL_ADC_Start_DMA(hadc, (uint32_t *)ADC_Buffer, MAX_ADC_CHANNEL);
     __HAL_DMA_DISABLE_IT(hadc->DMA_Handle, DMA_IT_HT);
@@ -35,6 +44,17 @@ void SystemManager::run()
         checkModeSwitch();
         Current_Controller->update(&m_packet);
         updateLED(); 
+        printf("mode: %d, x: %d, y: %d, base: %d, inner: %d, outer: %d, gripper: %d\r\n", 
+            m_packet.mode_data, 
+            m_packet.moter_x, 
+            m_packet.moter_y,
+            m_packet.servo_bot,
+            m_packet.servo_mid,
+            m_packet.servo_top,
+            m_packet.gripper
+            );
+        // 데이터 전송
+        Tx->SendToTx(&m_packet);
     }
 }
 
