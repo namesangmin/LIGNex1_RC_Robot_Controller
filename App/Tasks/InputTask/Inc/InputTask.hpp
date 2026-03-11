@@ -1,6 +1,6 @@
 #ifndef __INPUT_TASK_H__
 #define __INPUT_TASK_H__
-
+#define DELAY_CYCLE 20
 
 
 #endif // __INPUT_TASK_H__

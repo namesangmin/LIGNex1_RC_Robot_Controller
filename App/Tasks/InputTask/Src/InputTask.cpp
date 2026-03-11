@@ -8,8 +8,11 @@ void InputTaskHandler(void *argument){
 
     SystemManager* manager = new SystemManager();
     manager->initSystem(&hadc1);
+    
+    uint32_t delay_time = osKernelGetSysTimerCount();
     for(;;){
         manager->run();
-        osDelay(1);
+        delay_time += DELAY_CYCLE;
+        osDelayUntil(delay_time);
     }
 }
