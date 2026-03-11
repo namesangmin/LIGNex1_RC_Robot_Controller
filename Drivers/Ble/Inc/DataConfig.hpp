@@ -77,7 +77,7 @@ extern "C" {
 
 
 extern UART_HandleTypeDef huart1;
-extern osMessageQueueId_t RxQueueHandle;
+extern osMessageQueueId_t RxQhandleHandle;
 
 #if RC_Car
 extern osMessageQueueId_t ServoQHandle;
@@ -86,7 +86,7 @@ extern osMessageQueueId_t MoterQHandle;
 
 #define SERVO_QUEUE (ServoQHandle)
 #define MOTER_QUEUE (MoterQHandle)
-#define COM_QUEUE (RxQueueHandle)
+#define COM_QUEUE (RxQhandleHandle)
 
 
 
