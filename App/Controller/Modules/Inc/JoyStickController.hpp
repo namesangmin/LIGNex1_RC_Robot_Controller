@@ -16,7 +16,7 @@ class JoyStickController : public IController
 public:
     JoyStickController() : m_hadc(nullptr){};
     virtual ~JoyStickController(){};
-    
+
     void update(Data* data) override;
     void readJoyStickADC();
     void syncADC();
@@ -28,7 +28,7 @@ private:
 
     ADC_HandleTypeDef* m_hadc;
 
-    ButtonState JoyStickButton;
+    ButtonState RotateButton;
     JoyStickState Current;
     JoyStickState Prev;
 

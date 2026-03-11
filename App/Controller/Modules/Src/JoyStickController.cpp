@@ -26,26 +26,28 @@ void JoyStickController::readJoyStickADC()
 }
 
 // 변화량 감지
+// rotate 모드 감지
 void JoyStickController::process()
 {
-    JoyStickButton.Current_Time = HAL_GetTick();
+    RotateButton.Current_Time = HAL_GetTick();
     GPIO_PinState temp_Current_Val = HAL_GPIO_ReadPin(Rotate_Mode_Button_GPIO_Port,Rotate_Mode_Button_Pin);
     
-    // 한 번 누르면 계속 1이 유지 되는 것이 아니라 1 번만 1이 저장이 됨. 
-    // 50ms 미만일 때 무시(이전 누른 시간 vs 현재 누른 시간)
-    if(temp_Current_Val != JoyStickButton.prev){
-        if(JoyStickButton.Current_Time - JoyStickButton.Last_Time > JoyStickButton.DEBOUNCE_INTERVAL){            
-            if(temp_Current_Val == 1){
-                JoyStickButton.current ^= 1;
+    if(temp_Current_Val != RotateButton.prev)
+    {
+        if(RotateButton.Current_Time - RotateButton.Last_Time > RotateButton.DEBOUNCE_INTERVAL)
+        {            
+            if(temp_Current_Val == 1)
+            {
+                RotateButton.current ^= 1;
             }
 
-            JoyStickButton.Last_Time = JoyStickButton.Current_Time;
-            JoyStickButton.prev = temp_Current_Val;
+            RotateButton.Last_Time = RotateButton.Current_Time;
+            RotateButton.prev = temp_Current_Val;
         }
     }
 
-    uint16_t diff_x = abs((int32_t)Prev.x - (int32_t)Prev.y);
-    uint16_t diff_y = abs((int32_t)Prev.y - (int32_t)Prev.y);
+    uint16_t diff_x = abs((int32_t)Prev.x - (int32_t)Current.y);
+    uint16_t diff_y = abs((int32_t)Prev.y - (int32_t)Current.y);
     
     if(diff_x > ThresHold){
         Prev.x = Current.x;
@@ -60,7 +62,7 @@ void JoyStickController::makePacket(Data* data)
     data->moter_x = Prev.x;
     data->moter_y = Prev.y;
     
-    if(JoyStickButton.current){
+    if(RotateButton.current){
         data->mode_data = rotate;
     }
     else{

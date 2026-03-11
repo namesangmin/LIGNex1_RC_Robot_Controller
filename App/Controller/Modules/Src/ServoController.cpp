@@ -24,6 +24,7 @@ void ServoController::readServoADC()
     }
     HAL_ADC_Stop(m_hadc);
 }
+
 // 변화량 감지
 // 버킷 버튼 감지
 void ServoController::process()
@@ -31,21 +32,22 @@ void ServoController::process()
     Gripper_Button.Current_Time  = HAL_GetTick();
     GPIO_PinState temp_Current_Val = HAL_GPIO_ReadPin(Gripper_Button_GPIO_Port, Gripper_Button_Pin);
     
-    // 한 번 누르면 계속 1이 유지 되는 것이 아니라 1 번만 1이 저장이 됨. 
-    // 50ms 미만일 때 무시(이전 누른 시간 vs 현재 누른 시간)
-    if(temp_Current_Val != Gripper_Button.prev){
-        if(Gripper_Button.Current_Time - Gripper_Button.Last_Time > Gripper_Button.DEBOUNCE_INTERVAL){
-            if(temp_Current_Val == 1){
+    if(temp_Current_Val != Gripper_Button.prev)
+    {
+        if(Gripper_Button.Current_Time - Gripper_Button.Last_Time > Gripper_Button.DEBOUNCE_INTERVAL)
+        {
+            if(temp_Current_Val == 1)
+            {
                 Gripper_Button.current ^= 1;
             }
-            
+
             Gripper_Button.Last_Time = Gripper_Button.Current_Time;
             Gripper_Button.prev = temp_Current_Val;
         }
     }
     
     uint16_t diff_outer = abs((int32_t)Prev.outer - (int32_t)Current.outer);
-    uint16_t diff_inner = abs((int32_t)Prev.inner - (int32_t)Prev.inner);
+    uint16_t diff_inner = abs((int32_t)Prev.inner - (int32_t)Current.inner);
     uint16_t diff_base = abs((int32_t)Prev.base - (int32_t)Current.base);
 
     if(diff_base > ThresHold)

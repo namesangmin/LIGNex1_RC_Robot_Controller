@@ -30,6 +30,7 @@ void SystemManager::run()
     {
         checkModeSwitch();
         Current_Controller->update(&m_packet);
+        updateLED(); 
     }
 }
 
@@ -60,7 +61,6 @@ void SystemManager::checkModeSwitch()
             }
         }
     }
-    updateLED(); 
     Prev_State = Current_State;
 }
 void SystemManager::updateLED()
