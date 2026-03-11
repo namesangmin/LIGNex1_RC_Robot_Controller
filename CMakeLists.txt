@@ -42,6 +42,12 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined library search paths
 )
 
+# 블루투스 파일 - GLOB으로 전부 추가
+file(GLOB_RECURSE BLE_SOURCES
+    ${PROJECT_SOURCE_DIR}/Drivers/Ble/Src/*.cpp
+)
+
+
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
@@ -58,9 +64,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/App/Controller/Modules/Src/JoyStickController.cpp
     ${PROJECT_SOURCE_DIR}/App/Controller/Modules/Src/ServoController.cpp
  
-    # 블루투스 파일
-    ${PROJECT_SOURCE_DIR}/Drivers/Ble/Src/*.cpp
-    
+    # 블루투스
+    ${BLE_SOURCES}
 )
 
 # Add include paths
