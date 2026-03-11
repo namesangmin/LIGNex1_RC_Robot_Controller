@@ -1,6 +1,7 @@
 #include "SystemManager.hpp"
 #include "main.h"
 #include "stm32f1xx_hal.h"
+#include "stm32f1xx_hal_adc.h"
 #include "stm32f1xx_hal_dma.h"
 #include "stm32f1xx_hal_gpio.h"
 #include <cstdio>
@@ -10,16 +11,18 @@
 void SystemManager::initSystem(ADC_HandleTypeDef* hadc)
 {
     // adc 주솟값 전달
-    //this->m_hadc = hadc;
-    Joy_Controller.setADC(hadc);
-    Servo_Controller.setADC(hadc);
+    HAL_ADC_Start_DMA(hadc, (uint32_t *)ADC_Buffer, MAX_ADC_CHANNEL);
+    __HAL_DMA_DISABLE_IT(hadc->DMA_Handle, DMA_IT_HT);
+
+    Joy_Controller.setBuffer(ADC_Buffer);
+    Servo_Controller.setBuffer(ADC_Buffer);
 
     Joy_Controller.readJoyStickADC();
-    Joy_Controller.syncADC();
-
     Servo_Controller.readServoADC();
-    Servo_Controller.syncADC();
 
+    Joy_Controller.syncADC();
+    Servo_Controller.syncADC();
+    
     // 디폴트 주행 모드
     Current_Controller = &Joy_Controller;
     Current_Mode = driving;

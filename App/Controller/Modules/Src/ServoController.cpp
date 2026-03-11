@@ -12,17 +12,9 @@ void ServoController::update(Data* data)
 
 void ServoController::readServoADC()
 {
-    for(int idx = 1; idx <=5; idx++){
-        HAL_ADC_Start(m_hadc);
-        if(HAL_ADC_PollForConversion(m_hadc, 10) == HAL_OK){
-            uint16_t val = HAL_ADC_GetValue(m_hadc);
-
-            if(idx == 1) Current.outer = val;
-            else if(idx == 2) Current.inner = val;
-            else if(idx == 3) Current.base = val;
-        }
-    }
-    HAL_ADC_Stop(m_hadc);
+    Current.outer = ADC_Buf[0];
+    Current.inner = ADC_Buf[1];
+    Current.base = ADC_Buf[2];
 }
 
 // 변화량 감지
@@ -76,9 +68,9 @@ void ServoController::makePacket(Data* data)
     data->mode_data = arm;
 }
 
-void ServoController::setADC(ADC_HandleTypeDef* m_hadc)
+void ServoController::setBuffer(uint16_t* buf)
 {
-    this->m_hadc = m_hadc;
+    this->ADC_Buf = buf;
 }
 
 void ServoController::syncADC()

@@ -3,6 +3,7 @@
 #include "stm32f1xx_hal_adc.h"
 #include "stm32f1xx_hal_def.h"
 #include <cmath>
+#include <cstdint>
 
 void JoyStickController::update(Data* data)
 {
@@ -13,16 +14,8 @@ void JoyStickController::update(Data* data)
 
 void JoyStickController::readJoyStickADC()
 {
-    for(int idx = 1; idx <=5; idx++){
-        HAL_ADC_Start(m_hadc);
-        if(HAL_ADC_PollForConversion(m_hadc, 10) == HAL_OK){
-            uint16_t val = HAL_ADC_GetValue(m_hadc);
-
-            if(idx == 4) Current.x = val;
-            else if(idx == 5) Current.y = val;
-        }
-    }
-    HAL_ADC_Stop(m_hadc);
+    Current.x = ADC_Buf[3];
+    Current.y = ADC_Buf[4];
 }
 
 // 변화량 감지
@@ -70,9 +63,9 @@ void JoyStickController::makePacket(Data* data)
     }
 }
 
-void JoyStickController::setADC(ADC_HandleTypeDef* m_hadc)
+void JoyStickController::setBuffer(uint16_t* buf)
 {
-    this->m_hadc = m_hadc;
+    this->ADC_Buf = buf;
 }
 
 void JoyStickController::syncADC()

@@ -15,21 +15,20 @@ struct ServoState{
 class ServoController : public IController
 {
 public:
-    ServoController() : m_hadc(nullptr){};
+    ServoController() : ADC_Buf(nullptr){};
     virtual ~ServoController(){};
     
     void update(Data* data) override;
-    
     void readServoADC();
     void syncADC();
-    void setADC(ADC_HandleTypeDef* m_hadc);
+    void setBuffer(uint16_t* buf);
 
 private:
     void process();
     void makePacket(Data* data);
 
-    ADC_HandleTypeDef* m_hadc;
-
+    uint16_t* ADC_Buf;
+    
     ButtonState Gripper_Button;
     ServoState Current;
     ServoState Prev;

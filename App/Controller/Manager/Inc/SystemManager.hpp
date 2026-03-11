@@ -10,7 +10,7 @@
 
 #define MAX_MODULES 2
 #define DEBOUNCE_TIME 200
-
+#define MAX_ADC_CHANNEL 5
 enum mode
 {
     JOY_MODE,
@@ -28,7 +28,8 @@ private:
     void checkModeSwitch();
     void updateLED();
 
-    //ADC_HandleTypeDef* m_hadc;
+    uint16_t ADC_Buffer[MAX_ADC_CHANNEL];
+
     uint8_t Current_Mode;
     uint32_t Last_Pressed_Time = 0;
     uint16_t LED_Pin_arr[MAX_MODULES] = {Driving_Mode_LED_Pin, Robot_Arm_Mode_LED_Pin};

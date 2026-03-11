@@ -5,6 +5,7 @@
 #include "IController.hpp"
 #include "UGV_Packet.hpp"
 #include "ButtonState.hpp"
+#include <cstdint>
 
 struct JoyStickState{
     uint16_t x;
@@ -14,21 +15,21 @@ struct JoyStickState{
 class JoyStickController : public IController
 {
 public:
-    JoyStickController() : m_hadc(nullptr){};
+    JoyStickController() : ADC_Buf(nullptr){};
     virtual ~JoyStickController(){};
 
     void update(Data* data) override;
     
     void readJoyStickADC();
     void syncADC();
-    void setADC(ADC_HandleTypeDef* m_hadc);
+    void setBuffer(uint16_t* buf);
 
 private:
     void process();
     void makePacket(Data* data);
-
-    ADC_HandleTypeDef* m_hadc;
-
+    
+    uint16_t* ADC_Buf;
+    
     ButtonState RotateButton;
     JoyStickState Current;
     JoyStickState Prev;
