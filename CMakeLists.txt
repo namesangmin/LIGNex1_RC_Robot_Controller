@@ -52,6 +52,12 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 
     # Interrupt header path
     ${PROJECT_SOURCE_DIR}/App/ISR/Src/Interrupts.cpp
+
+        # 컨트롤러 부분 폴더
+    ${PROJECT_SOURCE_DIR}/App/Controller/Manager/Src/SystemManager.cpp
+    ${PROJECT_SOURCE_DIR}/App/Controller/Modules/Src/JoyStickController.cpp
+    ${PROJECT_SOURCE_DIR}/App/Controller/Modules/Src/ServoController.cpp
+    
 )
 
 # Add include paths
@@ -64,6 +70,12 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
     # Interrupt header path
     ${PROJECT_SOURCE_DIR}/App/ISR/Inc
+
+    # 컨트롤러 경로
+    ${PROJECT_SOURCE_DIR}/App/Controller/Manager/Inc
+    ${PROJECT_SOURCE_DIR}/App/Controller/Modules/Inc
+    ${PROJECT_SOURCE_DIR}/App/Controller/Common
+    ${PROJECT_SOURCE_DIR}/App/Controller/Interface    
 )
 
 # Add project symbols (macros)
