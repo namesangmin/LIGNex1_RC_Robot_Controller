@@ -9,7 +9,7 @@
 void SystemManager::initSystem(ADC_HandleTypeDef* hadc)
 {
     // adc 주솟값 전달
-    this->m_hadc = hadc;
+    //this->m_hadc = hadc;
     Joy_Controller.setADC(hadc);
     Servo_Controller.setADC(hadc);
 

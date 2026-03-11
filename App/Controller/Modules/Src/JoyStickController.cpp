@@ -18,8 +18,8 @@ void JoyStickController::readJoyStickADC()
         if(HAL_ADC_PollForConversion(m_hadc, 10) == HAL_OK){
             uint16_t val = HAL_ADC_GetValue(m_hadc);
 
-            if(idx == 4) this->JoyStick_X = val;
-            else if(idx == 5) this->JoyStick_Y = val;
+            if(idx == 4) Current.x = val;
+            else if(idx == 5) Current.y = val;
         }
     }
     HAL_ADC_Stop(m_hadc);
@@ -28,39 +28,39 @@ void JoyStickController::readJoyStickADC()
 // 변화량 감지
 void JoyStickController::process()
 {
-    uint32_t Current_Time = HAL_GetTick();
+    JoyStickButton.Current_Time = HAL_GetTick();
     GPIO_PinState temp_Current_Val = HAL_GPIO_ReadPin(Rotate_Mode_Button_GPIO_Port,Rotate_Mode_Button_Pin);
     
     // 한 번 누르면 계속 1이 유지 되는 것이 아니라 1 번만 1이 저장이 됨. 
     // 50ms 미만일 때 무시(이전 누른 시간 vs 현재 누른 시간)
-    if(temp_Current_Val != Last_Rotate_Mode_button){
-        if(Current_Time - Last_Time > DEBOUNCE_INTERVAL){
-            Last_Time = Current_Time;
-            Last_Rotate_Mode_button = temp_Current_Val;
-    
+    if(temp_Current_Val != JoyStickButton.prev){
+        if(JoyStickButton.Current_Time - JoyStickButton.Last_Time > JoyStickButton.DEBOUNCE_INTERVAL){            
             if(temp_Current_Val == 1){
-                this->Rotate_Mode_Button ^= 1;
+                JoyStickButton.current ^= 1;
             }
+
+            JoyStickButton.Last_Time = JoyStickButton.Current_Time;
+            JoyStickButton.prev = temp_Current_Val;
         }
     }
 
-    uint16_t diff_x = abs((int32_t)this->Prev_Joystick_X - (int32_t)this->JoyStick_X);
-    uint16_t diff_y = abs((int32_t)this->Prev_Joystick_Y - (int32_t)this->JoyStick_Y);
+    uint16_t diff_x = abs((int32_t)Prev.x - (int32_t)Prev.y);
+    uint16_t diff_y = abs((int32_t)Prev.y - (int32_t)Prev.y);
     
     if(diff_x > ThresHold){
-        this->Prev_Joystick_X = this->JoyStick_X;
+        Prev.x = Current.x;
     }
     if(diff_y > ThresHold){
-        this->Prev_Joystick_Y = this->JoyStick_Y;
+        Prev.y = Current.y;
     }
 }
 
 void JoyStickController::makePacket(Data* data)
 {
-    data->moter_x = this->Prev_Joystick_X;
-    data->moter_y = this->Prev_Joystick_Y;
-
-    if(this->Rotate_Mode_Button){
+    data->moter_x = Prev.x;
+    data->moter_y = Prev.y;
+    
+    if(JoyStickButton.current){
         data->mode_data = rotate;
     }
     else{
@@ -75,6 +75,6 @@ void JoyStickController::setADC(ADC_HandleTypeDef* m_hadc)
 
 void JoyStickController::syncADC()
 {
-    Prev_Joystick_X = JoyStick_X;
-    Prev_Joystick_Y = JoyStick_Y;
+    Prev.x = Current.x;
+    Prev.y = Current.y;
 }
