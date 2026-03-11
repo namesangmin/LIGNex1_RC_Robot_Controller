@@ -84,8 +84,10 @@ extern osMessageQueueId_t ServoQHandle;
 extern osMessageQueueId_t MoterQHandle;
 #endif
 
+#if RC_Car
 #define SERVO_QUEUE (ServoQHandle)
 #define MOTER_QUEUE (MoterQHandle)
+#endif
 #define COM_QUEUE (RxQhandleHandle)
 
 
