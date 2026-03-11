@@ -6,6 +6,8 @@ extern "C"{
     #include "main.h"
 }
 
+BleRx* BleRx::instance = nullptr;
+
 //반드시 Interrupt 설정 필요함
 //#include "cmsis_os2.h"
 // static uint8_t Rxflag = 1;

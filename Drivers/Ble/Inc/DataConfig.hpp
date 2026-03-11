@@ -12,7 +12,7 @@ extern "C" {
 #endif
 //RC Car에서는 RC_Car = 1, RC_Controller = 0
 #define RC_Controller 1
-#define RC_Car 1
+#define RC_Car 0
 
 
 #define Packet_len 14
