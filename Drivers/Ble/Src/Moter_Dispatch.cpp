@@ -1,3 +1,4 @@
+#if RC_Car
 #include "Moter_Dispatch.hpp"
 #include "DataConfig.hpp"
 
@@ -23,3 +24,5 @@ void Moter_dispatch::GetData(void *argument){
         HAL_UART_Transmit(DEBUG_HUART, (uint8_t*)err, strlen(err), 10);
     }
 }
+
+#endif

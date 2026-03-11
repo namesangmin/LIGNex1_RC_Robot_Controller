@@ -1,3 +1,4 @@
+#if RC_Car
 #include "Servo_Dispatch.hpp"
 #include "DataConfig.hpp"
 
@@ -25,3 +26,5 @@ void Servo_dispatch::GetData(void *argument){
     }
 }
 
+
+#endif

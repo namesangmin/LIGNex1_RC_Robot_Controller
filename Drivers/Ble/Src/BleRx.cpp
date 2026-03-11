@@ -31,9 +31,10 @@ BleRx* BleRx::instance = nullptr;
 void BleRx::Init(void *argument){
     huart = RX_HUART;
     qhandle = COM_QUEUE;
+#if RC_Car
     servo_q = SERVO_QUEUE;
     moter_q = MOTER_QUEUE;
-
+#endif
     instance = this;
 
     rx_old_pos = 0;
@@ -82,7 +83,7 @@ void BleRx::GetFromRx(void *argument){
     osStatus_t st = osMessageQueueGet(this->qhandle, &receive_flag, NULL, osWaitForever);
     if (st == osOK && check_cs(rx_buf, receive_flag)){
         Data *data = (Data*)(processor->Decoding(tmp));
-        #if RC_Controller
+        #if RC_Car
         if (data->mode_data == arm){
             Servo_type servo = {
                 .servo_top  = data->servo_top,
