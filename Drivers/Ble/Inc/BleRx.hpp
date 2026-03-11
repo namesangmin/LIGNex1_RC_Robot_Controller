@@ -22,11 +22,15 @@ class BleRx : public IRx{
         uint16_t rx_old_pos;
         IDataProcessor *processor;
         uint8_t receive_flag;
+        static BleRx *instance;
 
         uint16_t uart_dma_read(void *);
+        bool check_cs(uint8_t *, uint8_t);
     public:
         void Init(void *argument) override;
         void GetFromRx(void *arguement) override;
+        static void Callback(UART_HandleTypeDef *huart, uint8_t Size);
+        void OnRxEvent(uint8_t size);
         ~BleRx();
 };
 
