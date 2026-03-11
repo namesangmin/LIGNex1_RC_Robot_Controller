@@ -30,7 +30,7 @@ extern "C" {
 //UART 설정
 //*****************************//
 //디버깅 용 UART 설정
-#define DEBUG_UART_NUM 2
+#define DEBUG_UART_NUM 0
 
 //BLE용 UART 설정
 #define RX_UART_NUM 1
