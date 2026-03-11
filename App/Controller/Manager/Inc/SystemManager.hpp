@@ -22,7 +22,6 @@ class SystemManager
 public:
     void initSystem(ADC_HandleTypeDef* hadc);
     void run();
-    Data* getter(){return &m_packet;}
 
 private:
     Data m_packet;

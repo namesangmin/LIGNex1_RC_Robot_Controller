@@ -19,6 +19,7 @@ public:
     virtual ~ServoController(){};
     
     void update(Data* data) override;
+    
     void readServoADC();
     void syncADC();
     void setADC(ADC_HandleTypeDef* m_hadc);

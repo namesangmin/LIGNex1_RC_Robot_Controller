@@ -18,6 +18,7 @@ public:
     virtual ~JoyStickController(){};
 
     void update(Data* data) override;
+    
     void readJoyStickADC();
     void syncADC();
     void setADC(ADC_HandleTypeDef* m_hadc);
