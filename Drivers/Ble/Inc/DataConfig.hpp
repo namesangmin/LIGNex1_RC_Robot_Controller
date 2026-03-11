@@ -30,7 +30,7 @@ extern "C" {
 //UART 설정
 //*****************************//
 //디버깅 용 UART 설정
-#define DEBUG_UART_NUM 2
+#define DEBUG_UART_NUM 0
 
 //BLE용 UART 설정
 #define RX_UART_NUM 1
@@ -84,8 +84,10 @@ extern osMessageQueueId_t ServoQHandle;
 extern osMessageQueueId_t MoterQHandle;
 #endif
 
+#if RC_Car
 #define SERVO_QUEUE (ServoQHandle)
 #define MOTER_QUEUE (MoterQHandle)
+#endif
 #define COM_QUEUE (RxQhandleHandle)
 
 
