@@ -2,7 +2,7 @@
 #include "PacketCodec.hpp"
 
 
-void * PacketCodec::Encoding(void *argument){
+void *PacketCodec::Encoding(void *argument){
     data = *static_cast<Data*>(argument);
     buf[0] = SOF;
     buf[1] = data.mode_data;
@@ -26,7 +26,7 @@ void * PacketCodec::Encoding(void *argument){
 
 
     buf[13] = 0;
-    for(uint8_t i = 0; i < Packet_len; i++){
+    for(uint8_t i = 0; i < Packet_len-1; i++){
         buf[13] ^= buf[i];
     }
     return buf;
