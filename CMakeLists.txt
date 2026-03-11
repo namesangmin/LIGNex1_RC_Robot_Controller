@@ -57,6 +57,9 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/App/Controller/Manager/Src/SystemManager.cpp
     ${PROJECT_SOURCE_DIR}/App/Controller/Modules/Src/JoyStickController.cpp
     ${PROJECT_SOURCE_DIR}/App/Controller/Modules/Src/ServoController.cpp
+ 
+    # 블루투스 파일
+    ${PROJECT_SOURCE_DIR}/Drivers/Ble/Src/*.cpp
     
 )
 
@@ -75,7 +78,11 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     ${PROJECT_SOURCE_DIR}/App/Controller/Manager/Inc
     ${PROJECT_SOURCE_DIR}/App/Controller/Modules/Inc
     ${PROJECT_SOURCE_DIR}/App/Controller/Common
-    ${PROJECT_SOURCE_DIR}/App/Controller/Interface    
+    ${PROJECT_SOURCE_DIR}/App/Controller/Interface  
+    
+    #블루투스 경로
+    ${PROJECT_SOURCE_DIR}/Drivers/Ble/Inc
+    
 )
 
 # Add project symbols (macros)
