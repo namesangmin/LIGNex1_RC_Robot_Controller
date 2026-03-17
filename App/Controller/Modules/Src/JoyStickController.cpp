@@ -13,8 +13,8 @@ void JoyStickController::update(Data* data)
 
 void JoyStickController::readJoyStickADC()
 {
+    HAL_ADC_Start(m_hadc);
     for(int idx = 1; idx <=5; idx++){
-        HAL_ADC_Start(m_hadc);
         if(HAL_ADC_PollForConversion(m_hadc, 10) == HAL_OK){
             uint16_t val = HAL_ADC_GetValue(m_hadc);
 
@@ -46,7 +46,7 @@ void JoyStickController::process()
         }
     }
 
-    uint16_t diff_x = abs((int32_t)Prev.x - (int32_t)Current.y);
+    uint16_t diff_x = abs((int32_t)Prev.x - (int32_t)Current.x);
     uint16_t diff_y = abs((int32_t)Prev.y - (int32_t)Current.y);
     
     if(diff_x > ThresHold){

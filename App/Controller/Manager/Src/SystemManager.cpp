@@ -31,6 +31,17 @@ void SystemManager::run()
     {
         checkModeSwitch();
         Current_Controller->update(&m_packet);
+
+        printf("mode: %d, x: %d, y: %d, base: %d, inner: %d, outer: %d, gripper: %d\r\n", 
+            m_packet.mode_data, 
+            m_packet.moter_x, 
+            m_packet.moter_y,
+            m_packet.servo_bot,
+            m_packet.servo_mid,
+            m_packet.servo_top,
+            m_packet.gripper
+        );
+
         updateLED(); 
     }
 }

@@ -6,6 +6,6 @@ extern "C"
 void BluetoothRxTaskHandler(void *argument){
 
     for(;;){
-        osDelay(1);
+        osDelay(1000);
     }
 }

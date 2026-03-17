@@ -12,8 +12,8 @@ void ServoController::update(Data* data)
 
 void ServoController::readServoADC()
 {
+    HAL_ADC_Start(m_hadc);
     for(int idx = 1; idx <=5; idx++){
-        HAL_ADC_Start(m_hadc);
         if(HAL_ADC_PollForConversion(m_hadc, 10) == HAL_OK){
             uint16_t val = HAL_ADC_GetValue(m_hadc);
 

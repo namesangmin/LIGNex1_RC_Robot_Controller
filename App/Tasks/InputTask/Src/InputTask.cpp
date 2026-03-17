@@ -13,6 +13,7 @@ void InputTaskHandler(void *argument){
     for(;;){
         manager->run();
         delay_time += DELAY_CYCLE;
-        osDelayUntil(delay_time);
+        osDelay(100);  // osDelayUntil 대신 그냥 osDelay로
+
     }
 }
