@@ -87,6 +87,7 @@ void SystemManager::checkModeSwitch()
     }
     Prev_State = Current_State;
 }
+
 void SystemManager::updateLED()
 {    
     // 초기화

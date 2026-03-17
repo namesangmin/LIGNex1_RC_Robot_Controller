@@ -39,7 +39,7 @@ void JoyStickController::process()
         }
     }
 
-    uint16_t diff_x = abs((int32_t)Prev.x - (int32_t)Current.y);
+    uint16_t diff_x = abs((int32_t)Prev.x - (int32_t)Current.x);
     uint16_t diff_y = abs((int32_t)Prev.y - (int32_t)Current.y);
     
     if(diff_x > ThresHold){
