@@ -1,7 +1,8 @@
 # LIGNex1 RC Robot Controller
-<img width="1496" height="1496" alt="KakaoTalk_20260912_161510002_01" src="https://github.com/user-attachments/assets/ba0e61fb-78e6-428b-8bb4-71b573f202ad" />
-<img width="1496" height="1496" alt="KakaoTalk_20260912_161510002" src="https://github.com/user-attachments/assets/2f0ef763-73f1-42cd-a2b1-8760a4663bef" />
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ba0e61fb-78e6-428b-8bb4-71b573f202ad" width="45%" />
+  <img src="https://github.com/user-attachments/assets/2f0ef763-73f1-42cd-a2b1-8760a4663bef" width="45%" />
+</p>
 LIG D&A The SSEN Embedded SW School에서 진행한 팀 프로젝트입니다.
 
 STM32와 FreeRTOS를 기반으로 로봇의 주행과 로봇 팔을 제어하기 위한
