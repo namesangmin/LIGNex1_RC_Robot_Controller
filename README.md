@@ -176,5 +176,5 @@ stateDiagram-v2
 본 저장소는 팀 프로젝트 당시 소스 코드를 개인 포트폴리오용으로 정리한 저장소입니다.
 
 Original Team Repository:
-컨틀롤러: https://github.com/MainForm/LIGNex1_RC_Robot_Controller/tree/feature/controller_ble_merge_test
-UGV 로봇: https://github.com/MainForm/LIGNex1_RC_Robot_Car
+- 컨트롤러: https://github.com/MainForm/LIGNex1_RC_Robot_Controller/tree/feature/controller_ble_merge_test
+- UGV 로봇: https://github.com/MainForm/LIGNex1_RC_Robot_Car
